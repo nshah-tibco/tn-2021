@@ -15,7 +15,6 @@
 
 # How to run this code -
 # python3 flogo_rest_api.py <base_url> <access_token> <sourceAppId> <subscriptionLocator> <targetSubscriptionLocator> <newAppName>
-# python3 flogo_rest_api.py https://api.cloud.tibco.com CIC~1jMeVjaKXXyiYyMA3BN2US7i 4zq3ltkemzksoyir7h6z25hbe55yf5he ng5qdjk68q6_3w50jbauc3_mjs48zv uyyi2a-fw8fouaskjkqiojhimxmaf8 FlogoDemoApp
 
 import json
 import requests
@@ -81,7 +80,7 @@ def get_App_Details(appId,targetSubscriptionLocator):
       
     print('\n**** App Details *****' , response.json())  
 
-#https://api.cloud.tibco.com/tci/v1/subscriptions/uyyi2a-fw8fouaskjkqiojhimxmaf8/apps/e4sfelr3cuybr2gqls67w4gym7h3pqlz/start
+
 def start_App(targetSubscriptionLocator,app_id):
     req_url=base_url+'/tci/v1/subscriptions/'+targetSubscriptionLocator+'/apps/'+ app_id+'/start'
     #print ('req_url=',req_url)
@@ -92,7 +91,7 @@ def start_App(targetSubscriptionLocator,app_id):
       
     print('\n**** App Started *****' , response.json())  
 
-#https://api.cloud.tibco.com/tci/v1/subscriptions/uyyi2a-fw8fouaskjkqiojhimxmaf8/apps/e4sfelr3cuybr2gqls67w4gym7h3pqlz/endpoints
+
 def get_Endpoints(targetSubscriptionLocator,app_id):
     if targetSubscriptionLocator !='':
         response = requests.get(base_url+'/tci/v1/subscriptions/'+targetSubscriptionLocator+'/apps/'+ app_id+'/endpoints', headers=Auth_Header) 
@@ -107,18 +106,8 @@ def get_Endpoints(targetSubscriptionLocator,app_id):
     print('\n ***Test Endpoint Response ***',requests.get(req_url+'/rest').json())
 
 def main():
-    
-
-    
-    #base_url='https://api.cloud.tibco.com'
-    #access_token= 'CIC~1jMeVjaKXXyiYyMA3BN2US7i'
-    #sourceAppId='4zq3ltkemzksoyir7h6z25hbe55yf5he' #FlogoDemoApp
-    #newAppName='FlogoDemoApp'
-    #subscriptionLocator='ng5qdjk68q6_3w50jbauc3_mjs48zv' #Akron - Dev/QA Org
-    #targetSubscriptionLocator='uyyi2a-fw8fouaskjkqiojhimxmaf8' #Pre-Production / Staging Org
     get_UserInfo()
     app_id=copy_App(sourceAppId,newAppName,subscriptionLocator,targetSubscriptionLocator)
-    #app_id='m6ykfelr46j6mumauyzbducstfhr5tt3'
     get_App_Details(app_id,targetSubscriptionLocator)
     start_App(targetSubscriptionLocator,app_id)
     get_Endpoints(targetSubscriptionLocator,app_id)
